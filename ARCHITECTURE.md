@@ -106,7 +106,7 @@
 
 #### **Planner**
 
-**Location**: Embedded in prompt engineering (Cell 8)
+**Location**: Embedded in prompt engineering 
 
 **How It Breaks Down Tasks**:
 ```python
