@@ -405,7 +405,7 @@ User Action          Data                    Processing
                                           Ingredient List
                                             (text string)
                                                  │
-[Enter Text] ───> "low-carb dinner" ───────────>│
+[Enter Text] ───> "low-carb dinner" ───────────> │
                                                  │
                                                  ▼
                                         Gemini Generation API
@@ -419,7 +419,7 @@ User Action          Data                    Processing
                                                  ▼
                                         HTML Card Display
                                                  │
-[Select "2"] ───> Integer ──────────────────────│
+[Select "2"] ───> Integer ──────────────────────-│
                                                  ▼
                                         Recipe Dictionary
                                                  │
@@ -427,8 +427,8 @@ User Action          Data                    Processing
                                         Text Formatting
                                                  │
                                                  ▼
-                        ┌───────────────────────┴────────────────────┐
-                        ▼                                            ▼
+                        ┌───────────────────────-┴────────────────────┐
+                        ▼                                             ▼
                 [Email Option]                             [Copy/Paste Option]
                     SMTP                                   Formatted String
 ```
