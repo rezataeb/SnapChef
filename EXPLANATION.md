@@ -7,7 +7,7 @@ SnapChef processes user input through a sequential pipeline with three main stag
 ### Step-by-Step Process:
 
 **1. Receive User Input**
-- User uploads a fridge/pantry image via Colab file upload widget
+- User uploads a fridge/pantry image via file upload widget
 - User provides text constraints (e.g., "low-carb dinner", "quick lunch under $10")
 
 **2. Retrieve Relevant Memory**
@@ -37,7 +37,7 @@ SnapChef processes user input through a sequential pipeline with three main stag
 
 ## 2. Key Modules
 
-### Vision Module (`detect_ingredients()` - Cells 6-7)
+### Vision Module (`detect_ingredients()`)
 
 **Purpose**: Analyzes fridge images using Gemini's multimodal capabilities
 
@@ -59,7 +59,7 @@ def detect_ingredients(image, additional_context=""):
 
 ---
 
-### Recipe Planner (`generate_recipe_options()` - Cell 8)
+### Recipe Planner (`generate_recipe_options()`)
 
 **Purpose**: Generates 3 diverse recipe options optimized for different goals
 
@@ -81,7 +81,7 @@ def generate_recipe_options(detected_ingredients, user_constraints):
 
 ---
 
-### Display Executor (`display_recipe_options()`, `display_full_recipe()` - Cells 8, 10)
+### Display Executor (`display_recipe_options()`, `display_full_recipe()`)
 
 **Purpose**: Renders recipes in user-friendly HTML/text formats
 
@@ -105,8 +105,11 @@ generated_recipes = None        # List of 3 recipe dicts
 selected_recipe = None          # Single recipe dict
 ```
 
-**Scope**: Single notebook session only  
-**Persistence**: [Not Available] - No persistent memory, resets on kernel restart
+**Limitations**: 
+- No persistence across sessions
+- No learning from past interactions
+- Resets on kernel restart
+
 
 ---
 
@@ -179,23 +182,23 @@ server.send_message(msg)
 
 **Console Output**: All key steps print progress indicators and status messages directly to notebook output.
 
-**Example Log Flow**:
-```
-📸 Uploading image...
-✅ Image uploaded: 1024x768 pixels
+**Console Output**:
+- Progress indicators for each step (🔍, ✅, 📋)
+- Success/failure status messages
+- Partial API response previews
+- Error details with troubleshooting hints
 
+**Example Log**:
+```
 🔍 Analyzing image with Gemini Vision...
+--------------------------------------------------
 ✅ Analysis complete!
+==================================================
 
 📋 DETECTED INGREDIENTS:
 Proteins: 6 eggs, 1 chicken breast
-[...]
-
-🔍 Generating 3 recipe options...
-✅ 3 recipe options generated successfully!
+Vegetables: 2 red bell peppers...
 ```
-
-**Log Files**: [Not Available] - No persistent log files, console output only
 
 ---
 
@@ -239,13 +242,31 @@ except json.JSONDecodeError as e:
 
 ---
 
-### Automated Testing
+**Validation Checklist**:
+- [ ] Ingredients detected match image
+- [ ] All 3 recipes respect constraints
+- [ ] Shopping lists are accurate
+- [ ] Cooking instructions are safe and logical
+- [ ] Nutrition estimates are reasonable
+- [ ] Images display correctly
 
-**Test Scripts**: [Not Available] - No `TEST.sh` or automated test suite
+### Tracing Decisions
 
-**Testing Approach**: Manual execution through sequential notebook cells
+**Step-by-step visibility**:
+1. Image upload → Shows image preview
+2. Vision analysis → Prints full ingredient list
+3. Constraint input → Echoes user input
+4. Recipe generation → Shows summary of 3 options
+5. Selection → Confirms choice
+6. Full recipe → Displays complete details
 
----
+--------
+**Judges can trace**:
+- Which ingredients were detected
+- How constraints influenced recipes
+- Why certain ingredients were/weren't used
+- How waste reduction was calculated
+
 
 ## 5. Known Limitations
 
@@ -305,17 +326,7 @@ except json.JSONDecodeError as e:
 
 ---
 
-### 5. Fixed Serving Size (2 Servings)
-
-**Issue**: All recipes generated for exactly 2 servings
-
-**Impact**: Singles and families must manually scale quantities
-
-**Why**: Scaling logic not implemented in current version
-
----
-
-### 6. JSON Parsing Fragility
+### 5. JSON Parsing Fragility
 
 **Issue**: Gemini occasionally returns malformed JSON
 
@@ -325,7 +336,7 @@ except json.JSONDecodeError as e:
 
 ---
 
-### 7. No Real-Time Pricing Data
+### 6. No Real-Time Pricing Data
 
 **Issue**: Shopping lists show items but not actual current prices
 
@@ -335,7 +346,7 @@ except json.JSONDecodeError as e:
 
 ---
 
-### 8. English-Only Interface
+### 7. English-Only Interface
 
 **Issue**: All prompts, recipes, and UI text in English only
 
@@ -356,4 +367,4 @@ except json.JSONDecodeError as e:
 
 **Rate Limits**: Gemini free tier allows sufficient requests for demo purposes
 
-**Scalability**: [Not Available] - Current architecture is single-user, synchronous. No load testing performed.
+**Scalability**: Current architecture is single-user, synchronous. No load testing performed.
